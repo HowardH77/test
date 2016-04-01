@@ -1,0 +1,45 @@
+%!PS
+%%Title: Observation Log
+
+/debug { (DEBUG) pstack = } bind def
+
+/inch { 72 mul } def
+
+/observation {   % x y x2 y2 radius observation 
+        /radius exch def
+        /y exch def
+        /x exch def
+
+        /x load /radius load add /y load moveto
+        /x load /y load /radius load 0 360 arc closepath
+
+        /x2 /x load /radius load add 10 add def
+        /y2 /y load /radius load add  def
+
+        /x2 load  /y2 load 30 sub  moveto  (DateTime: __________________) show
+        /x2 load  /y2 load 45 sub  moveto  (Location: ___________________) show
+        /x2 load  /y2 load 60 sub  moveto  (Telescope: _________________) show
+        /x2 load  /y2 load 75 sub  moveto  (Eyepiece: __________________) show
+        /x2 load  /y2 load 90 sub  moveto  (Object: ____________________) show
+        /x2 load  /y2 load 110 sub moveto  (Starhop / Notes:) show
+        125 15 325 {
+            /y2 load sub neg dup
+            /x2 load exch moveto
+            7.95 inch exch lineto
+        } for
+} bind def
+
+
+newpath
+1 setlinewidth
+/Helvetica findfont 12 scalefont setfont
+
+2.80 inch 8.25 inch 2.5 inch  observation
+0 5.5 inch moveto 8.5 inch 5.5 inch lineto
+2.80 inch 2.75 inch 2.5 inch  observation
+
+stroke
+showpage
+
+% :!lpr -P YBINDEX %
+%%EOF
