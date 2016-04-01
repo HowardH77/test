@@ -1,0 +1,102 @@
+%!PS
+
+/phizz {
+        /y exch def
+        /x exch def
+        /size exch def
+
+        /quarter /size load 4 div def
+        /x_quarter1 /x load /quarter load add def
+        /y_quarter1 /y load /quarter load add def
+        /x_quarter2 /x load /quarter load 2 mul add def
+        /y_quarter2 /y load /quarter load 2 mul add def
+        /x_quarter3 /x load /quarter load 3 mul add def
+        /y_quarter3 /y load /quarter load 3 mul add def
+        /x_quarter4 /x load /quarter load 4 mul add def
+        /y_quarter4 /y load /quarter load 4 mul add def
+
+        /size load /x load /y load square
+        /x load /y_quarter1 load  /x load /size load add /y_quarter1 load  valley
+        /x load /y_quarter2 load  /x load /size load add /y_quarter2 load  mountain
+        /x load /y_quarter3 load  /x load /size load add /y_quarter3 load  valley
+
+        /x_quarter2 load /y_quarter4 load  /x_quarter2 load /y_quarter3 load  mountain
+        /x_quarter2 load /y_quarter3 load  /x_quarter2 load /y_quarter2 load  valley
+        /x_quarter2 load /y_quarter2 load  /x_quarter2 load /y_quarter1 load  mountain
+        /x_quarter2 load /y_quarter1 load  /x_quarter2 load /y          load  valley
+
+        /x load /y_quarter3 load           /x_quarter1 load /y_quarter4 load  valley
+        /x_quarter1 load /y_quarter4 load  /x_quarter2 load /y_quarter3 load  valley
+        /x_quarter2 load /y_quarter4 load  /x_quarter3 load /y_quarter3 load  valley
+        /x_quarter3 load /y_quarter3 load  /x_quarter4 load /y_quarter4 load  valley
+
+        /x load /y_quarter3 load           /x_quarter1 load /y_quarter2 load  mountain
+        /x_quarter1 load /y_quarter2 load  /x_quarter2 load /y_quarter3 load  mountain
+        /x_quarter2 load /y_quarter2 load  /x_quarter3 load /y_quarter3 load  mountain
+        /x_quarter3 load /y_quarter3 load  /x_quarter4 load /y_quarter2 load  mountain
+
+        /x load /y_quarter1 load           /x_quarter1 load /y_quarter2 load  valley
+        /x_quarter1 load /y_quarter2 load  /x_quarter2 load /y_quarter1 load  valley
+        /x_quarter2 load /y_quarter2 load  /x_quarter3 load /y_quarter1 load  valley
+        /x_quarter3 load /y_quarter1 load  /x_quarter4 load /y_quarter2 load  valley
+
+        /x load /y_quarter1 load           /x_quarter1 load /y load           mountain
+        /x_quarter1 load /y load           /x_quarter2 load /y_quarter1 load  mountain
+        /x_quarter2 load /y load           /x_quarter3 load /y_quarter1 load  mountain
+        /x_quarter3 load /y_quarter1 load  /x_quarter4 load /y load           mountain
+} def
+
+
+/valley {
+        [1 1] 1 fold
+} def
+
+
+/mountain {
+        [0 3] 0 fold
+} def
+
+
+/fold {
+        /dash_offset exch def  % set-dash offset
+        /dash_array exch def   % set-dash array
+        /y2 exch def
+        /x2 exch def
+        /y1 exch def
+        /x1 exch def
+
+        newpath
+        1 setlinewidth
+        1 setlinecap
+        /dash_array load /dash_offset load setdash
+        /x1 load /y1 load moveto
+        /x2 load /y2 load lineto
+        stroke
+} def
+
+
+/square {
+        /y exch def
+        /x exch def
+        /size exch def
+
+        newpath
+        2 setlinewidth
+        2 setlinecap
+        [1 1] 1 setdash
+        /x load /y load moveto
+        /size load 0 rlineto
+        0 /size load rlineto
+        /size load neg 0 rlineto
+        0 /size load neg rlineto
+        closepath stroke
+} def
+
+
+% Main
+/inch { 72 mul } def
+4 inch 0.0 inch 1.5 inch phizz
+4 inch 4.5 inch 1.5 inch phizz
+4 inch 0.0 inch 7.0 inch phizz
+4 inch 4.5 inch 7.0 inch phizz
+showpage
