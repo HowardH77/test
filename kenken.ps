@@ -1,0 +1,117 @@
+%!PS
+% KenKen
+
+/cage {
+        /shape exch def  % Array [ Pairs of Number-of-Units and Direction='R|D', ... ]
+        /cell0 exch def  % Counting from top-left to lower-right (0..N)
+        /op exch def     % Value-Operation (eg: 3+, 6x, 10+, 1-)
+
+        % /x /cell0    load /grid_size load mod 1 add /cell_size load mul def
+        % /y /cell0    load /grid_size load idiv 1 add /cell_size load mul /cell_size load add def
+        /x /cell0 load /grid_size load mod 1 add /cell_size load mul def
+        /y /cell0 load /grid_size load idiv neg /cell_size load mul def
+
+        /x load /x_op_offset load add  /y load /y_op_offset load sub  moveto /op load show
+        /x load /y load moveto
+        4 setlinewidth
+        1 2 /shape load length {
+                1 sub dup
+                /n_cells exch /shape load exch get def
+                /dir exch 1 add /shape load exch get def
+                /dir load (r) eq {
+                        /x /x load /n_cells load /cell_size load mul add def  % Right/Left
+                } {
+                        /y /y load /n_cells load /cell_size load mul sub def  % Down/Up
+                } ifelse
+                /x load /y load lineto
+        } for stroke
+} def
+
+
+  
+/grid {
+        /grid_size exch def
+        1 setlinewidth 
+        0 1 /grid_size load dup mul 1 sub {
+                /cell_num exch def
+                /x /cell_num load /grid_size load mod 1 add /cell_size load mul def
+                /y /cell_num load /grid_size load idiv neg /cell_size load mul def
+                /x load                     /y load                     moveto
+                /x load /cell_size load add /y load                     lineto
+                /x load /cell_size load add /y load /cell_size load sub lineto
+                /x load                     /y load /cell_size load sub lineto
+                /x load                     /y load                     lineto
+        } for
+        closepath stroke
+} def
+
+
+% Main
+/Helvetica findfont 12 scalefont setfont
+
+/cell_size 50 def
+/x_op_offset 4 def
+/y_op_offset 12 def
+
+% Common shape definitions
+/r2 [ 2 (r) 1 (d) -2 (r) -1 (d) ] def
+/r3 [ 3 (r) 1 (d) -3 (r) -1 (d) ] def
+/d2 [ 1 (r) 2 (d) -1 (r) -2 (d) ] def
+/d3 [ 1 (r) 3 (d) -1 (r) -3 (d) ] def
+/square [ 1 (r) 1 (d)  -1 (r)  -1 (d) ] def
+/L22 [ 1 (r) 1 (d)  1 (r)  1 (d) -2 (r) -2 (d) ] def
+/UL22 [ 2 (r) 1 (d)  -1 (r)  1 (d) -1 (r) -2 (d) ] def
+/BL22 [ 2 (r) 1 (d)  -1 (r)  1 (d) -1 (r) -2 (d) ] def
+/BUL22 [ 2 (r) 2 (d) -1 (r) -1 (d) -1 (r) -1 (d) ] def
+%
+%  L22=*    UL22=**   BL22=**  BUL22=**
+%      **        *         *          *
+% End Setup -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+15 700 translate
+newpath 3 grid  % 3x3 noop
+(3) 0 /square load cage
+(2) 1 /r2 load cage
+(4) 3 /UL22 load cage
+(3) 5 /square load cage
+(2) 7 /r2 load cage
+
+250 0 translate
+newpath 4 grid  % 4x4 noop
+(1-)  0 /r2 load cage
+(6+)  2 [ 2 (r) 1 (d) -1 (r) 1 (d) -2 (r) -1 (d) 1 (r) -1 (d) ] cage
+(3-)  4 /d2 load cage
+(8+)  7 /d3 load cage
+(7+)  9 [ 1 (r) 2 (d) -2 (r) -1 (d) 1 (r) -1 (d) ] cage
+(1-) 10 /d2 load cage
+
+-300 -300 translate
+newpath 5 grid  % 5x5 KenKen
+ (1-)  0 /r2    load cage
+ (8+)  2 /d2    load cage
+ (2/)  3 /r2    load cage
+ (3-)  5 /d2    load cage
+ (6x)  6 /d2    load cage
+ (3-)  8 /d2    load cage
+ (1-)  9 /d2    load cage
+ (2/) 12 /d2    load cage
+(30*) 15 /UL22  load cage
+(10+) 18 /BUL22 load cage
+(8+)  21 /r3    load cage
+
+265 0 translate
+newpath 6 grid  % 6x6 KenKen
+ (20x)  0 /d3 load cage
+ (10+)  1 /r3 load cage
+ (60x)  4 /BUL22 load cage
+  (8x)  7 /r3 load cage
+ (12+) 10 /d3 load cage
+  (6+) 17 /d3 load cage
+(120x) 14 /BUL22 load cage
+  (8+) 13 /L22 load cage
+ (12+) 18 /L22 load cage
+ (30x) 26 /r3 load cage
+ (14+) 30 /r3 load cage
+  (8x) 33 /r3 load cage
+
+showpage
