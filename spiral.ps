@@ -1,0 +1,19 @@
+%!PS
+
+newpath
+/len 20 def
+/loop 200 def
+/angle 61 def
+/angle 91 def
+/angle 136 def
+/angle 217 def
+/angle 301 def
+
+306 396 translate
+0 /len load moveto
+0 2 /loop load { 
+        0 exch /len load add lineto
+        /angle load rotate
+} for
+stroke
+showpage
