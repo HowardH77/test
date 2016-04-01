@@ -1,0 +1,48 @@
+%!PS
+% Position Angle circle
+
+/inch { 72 mul } bind def
+
+/do_label {   %% radius rotate_degrees txt do_label
+        /txt exch def
+        /rotate_degrees exch def
+        /radius exch def
+
+        /txtlen /txt load length def
+        /rotate_degrees load neg rotate
+        /txtlen load 6 mul neg /radius load       moveto             /txt load show
+        /txtlen load 6 mul     /radius load 5 sub moveto -180 rotate /txt load show
+        % /txtlen load 6 mul     /radius load 5 sub moveto  180 rotate
+        /rotate_degrees load rotate
+} bind def
+
+
+newpath
+/Helvetica findfont 22 scalefont setfont
+8.5 inch 2 div 11 inch 2 div translate
+
+1 setlinewidth
+2 inch 0 moveto  0 0 1.625 inch 0 360 arc closepath
+2 inch 0 moveto  0 0 2 inch 0 360 arc closepath
+2 inch 0 moveto  0 0 3 inch 0 360 arc closepath
+4 inch 0 moveto  0 0 4 inch 0 360 arc closepath
+0 0 moveto   0 inch  3.0 inch lineto
+0 0 moveto   0 inch -3.0 inch lineto
+0 0 moveto   3.0 inch 0 inch lineto
+0 0 moveto  -3.0 inch 0 inch lineto
+0 inch 0 inch moveto   2.1 inch  2.1 inch lineto
+0 inch 0 inch moveto  -2.1 inch  2.1 inch lineto
+0 inch 0 inch moveto  -2.1 inch -2.1 inch lineto
+0 inch 0 inch moveto   2.1 inch -2.1 inch lineto
+stroke
+
+3.7 inch  0 (0 N) do_label
+3.7 inch 45 (45 NE) do_label
+3.7 inch 90 (90 E) do_label
+3.7 inch 135 (135 SE) do_label
+3.7 inch 180 (180 S) do_label
+3.7 inch 225 (225 SW) do_label
+3.7 inch 270 (270 W) do_label
+3.7 inch 315 (315 NW) do_label
+
+showpage
