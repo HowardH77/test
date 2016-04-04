@@ -1,0 +1,73 @@
+#! /bin/sh
+#  Synopsis:    watch [-V] [-s sleep_interval] [-e [mm[dd]]HHMM] [-q] command-line command-line-args ...
+#  Description: Run a command repeatedly and watch when the output changes.
+#               Options: -V suppress verbose output
+#                        -s Specify sleep interval (in seconds) between diff checks
+#                        -e Exit at specified time.
+#                        -q Quit (Exit after output changes).
+
+display_output()
+{
+        if [ "$1" = '-n' ]; then nl=''; shift 1; else nl='%n'; fi
+        outfile=$1
+        msg=$2
+
+        echo "`date +${nl}%c` -- $msg"
+        cat $outfile
+}
+
+
+# Main
+verbose=1
+while getopts s:e:qV opt; do
+        case $opt in
+          s) sleep=$OPTARG;;
+          e) exit_time=$OPTARG;;
+          q) exit_on_diff=1;;
+          V) verbose=0;;
+        esac
+done
+shift `expr $OPTIND - 1`
+
+if [ -n "$exit_time" ]; then
+        case `expr length "$exit_time"` in
+          4)  fmt_exit_time='%H%M';;
+          6)  fmt_exit_time='%d%H%M';;
+          8)  fmt_exit_time='%m%d%H%M';;
+          *)  echo "Error: '$0 -q $exit_time is invalid, (exit_time format is [mm[DD]]HHMM])" >&2
+              exit 1;;
+        esac
+fi
+
+tmpdir=$HOME/.tmp
+if [ ! -w $HOME/.tmp ]; then tmpdir=/tmp; fi
+tmpfile1=$tmpdir/watcher1.$$
+tmpfile2=$tmpdir/watcher2.$$
+trap "rm -f $tmpfile1 $tmpfile2" 0 9 15
+
+cmd="$@"
+"$@" > $tmpfile1
+if [ $verbose -eq 1 ]; then display_output -n $tmpfile1 "Run '$cmd'"; fi
+while true; do
+        sleep ${sleep:-60}
+        "$@" > $tmpfile2
+        diff -q $tmpfile1 $tmpfile2 >/dev/null
+        if [ $? -ne 0 ]; then
+                if [ $verbose -eq 1 ]; then
+                        display_output $tmpfile2 "Diff '$cmd'"
+                fi
+                if [ ${exit_on_diff:-0} -eq 1 ]; then exit; fi
+                mv $tmpfile2 $tmpfile1
+        fi
+        tmx=`date +"${fmt_exit_time:-%H%M}"`
+        if [ -n "$exit_time" -a "$tmx" -gt ${exit_time:-99999999} ]; then
+                date +"%n%c -- Exit at timespec '$exit_time'"
+                exit 0
+        fi
+done
+exit
+
+:!sh % date
+:!sh % -s 2 date
+:!sh % -s 2 -q date
+:!{ /bin/rm -f /tmp/test.watch; sleep 60; date > /tmp/test.watch; } & sh % -q ls -l /tmp/test.watch
