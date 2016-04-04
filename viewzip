@@ -1,0 +1,53 @@
+#! /bin/ksh     
+#  Synopsis:    viewzip [-e editor] zipfile [filename ...]
+#  Description: View files in a zip archive.  Default: view all files in the archive if no filespec arguments are provided.
+#               Options: -e editor  Specify editor (default: $EDITOR or 'vi -R')
+
+argv0=`basename $0`
+cwd=`pwd`
+while getopts e:n opt; do
+        case $opt in
+          e) EDITOR=$OPTARG ;;
+          n) edit_flag=0 ;;
+          \?) echo "Usage: $argv0 [-e editor] zipfile [file ...]" >&2
+              exit 1 ;;
+        esac
+done
+shift `expr $OPTIND - 1`
+case "$1" in
+  /*) zipfile="$1" ;;
+  *) zipfile="$cwd/$1" ;;
+esac
+shift
+# set -- "$@";  # remaining argv = list of files to view (use this if shell arrays are not available)
+files="$@";  # remaining argv = list of files to view
+nfiles=$#
+
+tmpdir=${TMPDIR:-$HOME/.tmp}/$$
+if [ ! -w "$tmpdir" ]; then tmpdir=/usr/tmp/$$; fi
+trap "rm -rf $tmpdir" 0 15
+zipdir=$tmpdir/`basename $zipfile`
+if mkdir -p $zipdir && cd $zipdir; then
+        if jar xvf $zipfile "$@" >/dev/null; then
+                if [ ${edit_flag:-1} -eq 1 ]; then
+                        ${EDITOR:-vi -R} "$@"
+                        # ${EDITOR:-vi -R} "${files[@]}"
+                else
+                        ls -CF
+                        ${SHELL:-/bin/ksh}
+                fi
+        else
+                echo "Error: $argv - Cannot extract files from '$jar'" >&2
+                exit 1
+        fi
+else
+        echo "Error: $argv0 - Cannot create work directory '$zipdir'" >&2
+        exit 1
+fi
+
+cd $cwd;  # cd out of $tmpdir otherwise "rm -rf $tmpdir" (from trap 0)  will fail
+exit 0
+
+:!viewzip RAD.Gvt-20130619.zip
+:!viewzip RAD.Gvt-20130619.zip PYMETA.prop yc.desc py_values1.data
+:!viewzip RAD.Gvt-20130619.zip '*.desc';  # Note use of quoted filespec
