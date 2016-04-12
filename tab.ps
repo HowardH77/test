@@ -1,0 +1,26 @@
+%!PS
+% TAB
+
+/staff {
+        /y_offset exch def
+        /Helvetica findfont 18 scalefont setfont
+        25 /y_offset load 35 add moveto (T) show
+        25 /y_offset load 18 add moveto (A) show
+        25 /y_offset load  1 add moveto (B) show
+        1 setlinewidth
+        0 10 50 {
+                /y exch /y_offset load add def
+                 40 /y load moveto
+                580 /y load lineto
+        } for
+        stroke
+} def
+
+
+% Main
+0 1 1 {
+        newpath
+        650 -100 50 { staff } for
+        showpage
+} for
+
