@@ -11,7 +11,12 @@
         0 10 50 {
                 /y exch /y_offset load add def
                  40 /y load moveto
-                580 /y load lineto
+                550 /y load lineto
+        } for
+        150 100 550 {
+                dup
+                /y load moveto
+                /y load 50 sub lineto
         } for
         stroke
 } def
