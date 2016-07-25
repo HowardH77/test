@@ -1,0 +1,24 @@
+#! /bin/sh
+#  Description:  Convert UTF-8 encodings to ASCII
+#                Diacritical Marks:
+#                  Grave Accent " ̀" and Acute Accent " ́" to ASCII single quote
+#                  Double Grave Accent ' ̋' and Double Acute Accent to ASCII double quote
+#                HTML Symbols:
+‘
+
+if [ "$1" = '-d' ]; then  # Debugging code
+        echo 'Grave Accent ->  ̀'; 
+        echo 'Acute Accent ->  ́';
+        echo 'Double Grave Accent ->  ̏';
+        echo 'Double Acute Accent ->  ̋'; 
+        echo 'Left Single Quotation Mark ->' 
+        echo 'Right Single Quotation Mark ->'
+else
+        cat
+fi | sed \
+        -e "s/ ̀/'/g" \
+        -e "s/ ́/'/g" \
+        -e 's/ ̏/"/g' \
+        -e 's/ ̋/"/g' \
+
+
