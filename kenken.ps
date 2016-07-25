@@ -8,7 +8,7 @@
 /x_op_offset 4 def
 /y_op_offset 12 def
 
-% Common shape definitions
+% Common shape definitions (digits = right-down)
 /r2 [ 2 (r) 1 (d) -2 (r) -1 (d) ] def
 /r3 [ 3 (r) 1 (d) -3 (r) -1 (d) ] def
 /d2 [ 1 (r) 2 (d) -1 (r) -2 (d) ] def
@@ -16,6 +16,7 @@
 /square [ 1 (r) 1 (d)  -1 (r)  -1 (d) ] def
 /square2 [ 2 (r) 2 (d)  -2 (r)  -2 (d) ] def
 
+/L13 [ 1 (r) 2 (d)  1 (r)  1 (d) -2 (r) -3 (d) ] def
 /L22 [ 1 (r) 1 (d)  1 (r)  1 (d) -2 (r) -2 (d) ] def
 /UL22 [ 2 (r) 1 (d)  -1 (r)  1 (d) -1 (r) -2 (d) ] def  % Upside-down L
 /UL32 [ 3 (r) 1 (d)  -2 (r)  1 (d) -1 (r) -2 (d) ] def  % Upside-down L
@@ -26,9 +27,9 @@
 %  L22=*    UL22=**   BL22= *  BUL22=**
 %      **        *         **         *
 
-% /T1 [ 1 (r) 1 (d) 1 (r) 1 (d)    -1 (r) 1 (d) -1 (r) -3 (d) ] def
-% /T2 [ 1 (r) 1 (d) 1 (r) 1 (d)    -1 (r) 1 (d) -1 (r) -3 (d) ] def
-% /T3 [ 1 (r) 1 (d) 1 (r) 1 (d)    -1 (r) 1 (d) -1 (r) -3 (d) ] def
+% /T1 [ 1 (r) 3 (d) ] def
+/T2 [ 1 (r) 3 (d) -1 (r) -1 (d) -1 (r) -1 (d) 1 (r) -1 (d) ] def
+% /T3 [ 1 (r) 1 (d) ] def
 /T4 [ 1 (r) 1 (d) 1 (r) 1 (d)    -1 (r) 1 (d) -1 (r) -3 (d) ] def
 %  T1=***    T2=  *   T3= *   T4=*
 %      *        * *      ***     **
