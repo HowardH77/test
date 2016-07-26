@@ -1,36 +1,35 @@
 %!PS
-% KenKen
-
-% Configuration / Setup -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+% File: .kenken.ps
+% Configuration / Setup
 
 /Helvetica findfont 12 scalefont setfont
 /cell_size 50 def
 /x_op_offset 4 def
 /y_op_offset 12 def
 
-% Common shape definitions (digits = right-down)
-/r2 [ 2 (r) 1 (d) -2 (r) -1 (d) ] def
-/r3 [ 3 (r) 1 (d) -3 (r) -1 (d) ] def
-/d2 [ 1 (r) 2 (d) -1 (r) -2 (d) ] def
-/d3 [ 1 (r) 3 (d) -1 (r) -3 (d) ] def
-/square [ 1 (r) 1 (d)  -1 (r)  -1 (d) ] def
-/square2 [ 2 (r) 2 (d)  -2 (r)  -2 (d) ] def
+% Common shape definitions (digits = width,height)
+/r2 { [ 2 (r) 1 (d) -2 (r) -1 (d) ] cage } def
+/r3 { [ 3 (r) 1 (d) -3 (r) -1 (d) ] cage } def
+/d2 { [ 1 (r) 2 (d) -1 (r) -2 (d) ] cage } def
+/d3 { [ 1 (r) 3 (d) -1 (r) -3 (d) ] cage } def
+/square  { [ 1 (r) 1 (d)  -1 (r)  -1 (d) ] cage } def
+/square2 { [ 2 (r) 2 (d)  -2 (r)  -2 (d) ] cage } def
 
-/L13 [ 1 (r) 2 (d)  1 (r)  1 (d) -2 (r) -3 (d) ] def
-/L22 [ 1 (r) 1 (d)  1 (r)  1 (d) -2 (r) -2 (d) ] def
-/UL22 [ 2 (r) 1 (d)  -1 (r)  1 (d) -1 (r) -2 (d) ] def  % Upside-down L
-/UL32 [ 3 (r) 1 (d)  -2 (r)  1 (d) -1 (r) -2 (d) ] def  % Upside-down L
-/BL22 [ 1 (r) 2 (d)  -2 (r)  -1 (d) 1 (r) -1 (d) ] def  % Backwards L
-/BL23 [ 1 (r) 2 (d)  -3 (r)  -1 (d) 2 (r) -1 (d) ] def  % Backwards L
-/BUL22 [ 2 (r) 2 (d) -1 (r) -1 (d) -1 (r) -1 (d) ] def  % Backwards Upside-down L
-/BUL32 [ 3 (r) 2 (d) -1 (r) -1 (d) -2 (r) -1 (d) ] def  % Backwards Upside-down L
+/L13   { [ 1 (r) 2 (d)  1 (r)  1 (d) -2 (r) -3 (d) ] cage } def
+/L22   { [ 1 (r) 1 (d)  1 (r)  1 (d) -2 (r) -2 (d) ] cage } def
+/UL22  { [ 2 (r) 1 (d)  -1 (r)  1 (d) -1 (r) -2 (d) ] cage } def  % Upside-down L
+/UL32  { [ 3 (r) 1 (d)  -2 (r)  1 (d) -1 (r) -2 (d) ] cage } def  % Upside-down L
+/BL22  { [ 1 (r) 2 (d)  -2 (r)  -1 (d) 1 (r) -1 (d) ] cage } def  % Backwards L
+/BL23  { [ 1 (r) 2 (d)  -3 (r)  -1 (d) 2 (r) -1 (d) ] cage } def  % Backwards L
+/BUL22 { [ 2 (r) 2 (d) -1 (r) -1 (d) -1 (r) -1 (d) ] cage } def  % Backwards Upside-down L
+/BUL32 { [ 3 (r) 2 (d) -1 (r) -1 (d) -2 (r) -1 (d) ] cage } def  % Backwards Upside-down L
 %  L22=*    UL22=**   BL22= *  BUL22=**
 %      **        *         **         *
 
-% /T1 [ 1 (r) 3 (d) ] def
-/T2 [ 1 (r) 3 (d) -1 (r) -1 (d) -1 (r) -1 (d) 1 (r) -1 (d) ] def
-% /T3 [ 1 (r) 1 (d) ] def
-/T4 [ 1 (r) 1 (d) 1 (r) 1 (d)    -1 (r) 1 (d) -1 (r) -3 (d) ] def
+/T1 { [ 3 (r) 1 (d) -1 (r) 1 (d) -1 (r) -1 (d) -1 (r) -1 (d) ] cage } def
+/T2 { [ 1 (r) 3 (d) -1 (r) -1 (d) -1 (r) -1 (d) 1 (r) -1 (d) ] cage } def
+/T3 { [ 1 (r) 1 (d) 1 (r) 1 (d) -3 (r) -1 (d) 1 (r) -1 (d) ] cage } def
+/T4 { [ 1 (r) 1 (d) 1 (r) 1 (d)    -1 (r) 1 (d) -1 (r) -3 (d) ] cage } def
 %  T1=***    T2=  *   T3= *   T4=*
 %      *        * *      ***     **
 %                 *              *
@@ -79,9 +78,4 @@
         closepath stroke
 } def
 
-% END Setup -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-
-
-
-
-
+% End Configuration / Setup -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
