@@ -1,0 +1,73 @@
+Howard Hong
+92-05 69th Ave
+Forest Hills, NY 11375
+347-644-0264
+
+Dear Sir,
+
+
+In reference to your job posting for a "", I have attached my resume for your consideration.  After reviewing 
+your needs, I feel my skills and experience fit your requirements.
+
+In my present position, I am the primary developer redesigning and refactoring the overnight pricing 
+infrastructure code for YieldBook (a fixed income analytics system).  I am tasked with three specific 
+objectives 1) performance tuning the code base, 2) increasing the scale of the data processed and 3) reduce 
+and simplify the maintenance and support costs of the code.  Note, all three goals are developed and 
+installed to “live” systems and no interruption to the existing production environment is allowed.  Despite 
+the difficulty and large scope of the changes required, I accomplished this by independently building a test 
+regression suite into a dev/test framework that I also created.  The regression test suite is also fully 
+automated and provides daily feedback on all code changes before a production install.
+
+
+In reference to your job posting for a "Database Programmer - Informix Migration", I have attached my resume 
+for your consideration.  After reviewing your needs, I feel my skills and experience fit your requirements.  
+In my present position, I am the primary developer redesigning and refactoring the overnight pricing 
+infrastructure code for YieldBook (a fixed income analytics system).  The work entails creating new 
+databases, migrating and loading the data, and updating and enhancing numerous legacy applications.  I am 
+also heavily involved in meetings with clients and other development groups, creating new data feeds, writing 
+simple reports, off hours support and root cause trouble shooting analysis and correction.  In addition to my 
+primary duties, I also created a complete regression test suite for testing modifications to the overnight 
+pricing code.
+
+
+In my present position, I am the primary developer redesigning and refactoring the overnight pricing 
+infrastructure code for YieldBook (a fixed income analytics system).  The work entails creating new 
+databases, migrating and loading the data, and updating legacy applications to the new system.  In addition, 
+my other responsibilities include additional application enhancements, meetings with clients and other 
+development groups, creating new data feeds, writing simple reports , off hours support and root cause 
+trouble shooting analysis and correction.  
+ 
+I am the primary developer rebuilding and refactoring the market indices application at Barclays Capital.  
+This was an extremely large legacy application developed over 10+ years with multiple programming languages, 
+multiple database engines, and multiple coding styles.  I designed and developed the QA/dev platform for re-
+architecting the entire application.  I performed large scale code analysis, refactored code components,  and 
+centralized all inputs/outputs interfaces to the application.  My experience includes migrating entire code 
+bases, swap out/swap in major components including database engines and operating system ports.  I am also 
+well versed in performance tuning, root cause trouble shooting analysis and also custom software tools 
+development.
+
+I have extensive applications development experience ranging from trading systems, ETL systems, legacy code 
+migrations, systems and database administration and custom software tools development.  I am currently 
+rewriting and performance tuning the entire overnight batch processing for the Yieldbook (a fixed income 
+analytics system) application.  The application consists of extensive C code, shell scripts, Sybase 
+SQL,static and dynamic tables, stored procs, and triggers.  I also independently created a QA 
+framework/regression test platform and helped to build the QA/test environments. 
+
+I have extensive applications development experience ranging from trading systems, ETL systems, legacy code 
+migrations, systems and database administration and custom software tools development. I look forward to 
+discussing my qualifications with you.
+
+
+I look forward to discussing my qualifications with you.
+
+Sincerly,
+Howard Hong
+347-644-0264
+
+
+data workflow, multi-platform distributed applications, Design/Develop/code end to end
+database modeling, testing and process automation etc
+Conduct system analysis and work estimate for new tasks; 
+Write high level and low level design documents
+High level of Collaboration with other internal or external teams
+
