@@ -1,0 +1,5 @@
+#! /bin/cat
+
+* Citi shell script goofs
+  mailx email_addr.@xxx.com < .  #  stdin redirect fail (reads current directory, Unix directory is a binary file, potential read permission issue).
+  
