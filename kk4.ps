@@ -1,28 +1,64 @@
 %! File: kk4.ps
 
 0 800 translate
+newpath 4 grid  % Dec 2016 4x4 handcrafted puzzle
+ (9+)  0 BUL22
+ (5+)  2 d2
+ (2/)  3 d2
+ (1-)  4 d2
+ (6*)  9 UL22
+(48*) 11 BL22
+  (1) 12 square
+
+300 0 translate
+newpath 4 grid  % Nov 2016 4x4 handcrafted puzzle
+  (1)  0 square
+(12*)  1 d2
+ (6*)  2 r2
+ (2/)  4 d2
+ (2/)  6 r2
+ (2/)  9 d2
+  (4) 10 square
+(12*) 11 BL22
+  (3) 12 square
+
+-300 -280 translate
+newpath 4 grid  % Sept 2016 4x4 hand-crafted puzzle
+  (4) 0 square
+(12*) 1 L22
+ (2-) 2 r2
+ (2/) 4 d2
+ (3-) 7 d2
+(11+) 9 BUL22
+ (4+) 12 r2
+  (2) 15 square
+
+showpage
+
+
+0 800 translate
 newpath 4 grid  % 4x4 noop puzzle #
  (2/)  0 d2
  (2/)  1 r2
 (12*)  3 d3
-(12*)  5 BUL22
-(72*)  8 square2
+(12*)  5 BUL22 
+(72*)  8 square2 
  (2/) 14 r2
 
 300 0 translate
 newpath 4 grid  % 4x4 puzzle #
 (1-)  0 r2
-(6+)  2 [ 2 (r) 1 (d) -1 (r) 1 (d) -2 (r) -1 (d) 1 (r) -1 (d) ] cage
+(6+)  2 [ 2 (r) 1 (d) -1 (r) 1 (d) -2 (r) -1 (d) 1 (r) -1 (d) ] cage  
 (3-)  4 d2
 (8+)  7 d3
-(7+)  9 BL22
+(7+)  9 BL22  
 (1-) 10 d2
 
 -300 -280 translate
-newpath 4 grid  % July 2016 4x4 hand-crafted puzzle
+newpath 4 grid  % July 2016 4x4 hand-crafted puzzle  
  (8*)  0 r3
 (12*)  3 d3
-(12*)  4 BUL22  
+(12*)  4 BUL22 
 (12*)  6 d2
 (12*)  8 L22
 (2/)  14 r2
@@ -39,17 +75,26 @@ newpath 4 grid  % Aug 2016 4x4 hand-crafted puzzle
   (1) 12 square
  (6*) 13 r2
   (4) 15 square
-  
+
+
 -300 -280 translate
 newpath 4 grid  % March 2016 hand-crafted 4x4 puzzle
   (1-)  0 r2
-  (6+)  2 BZ222
+  (6+)  2 BZ222 
   (3-)  4 d2
   (8+)  7 d3
-  (7+)  9 BL22
+  (7+)  9 BL22  
   (1-) 10 d2
 
-300 0 translate 
+
+300 0 translate
 newpath 4 grid  % 4x4 noop puzzle #
+  (9+)   0 r3
+  (2-)   3 d2
+  (2/)   4 r2
+  (1)    6 square
+  (12*)  8 UL22  
+  (9+)  10 BUL22
+  (2/)  13 r2
 
 showpage
