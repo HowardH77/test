@@ -1,0 +1,29 @@
+#! /bin/sh
+#  Description: base conversions, math calculations, ...
+             
+case "$0" in    
+  *x2d) ibase=16; obase=10; unset calc exp ;;
+  *d2x) ibase=10; obase=16; unset calc exp ;;
+  *o2d) ibase=8; obase=10; unset calc exp ;;
+  *d2o) ibase=10; obase=8; unset calc exp ;;
+  *b2d) ibase=2;  obase=10; unset calc exp ;;
+  *d2b) ibase=10;  obase=2; unset calc exp ;;
+  *square) ibase=10; obase=10; calc=square; exp=2 ;;
+  *cube) ibase=10; obase=10; calc=square; exp=3 ;;
+  *) ibase=10; obase=10; unset calc exp;;
+esac        
+            
+{ 
+        echo "obase=$obase"
+        echo "ibase=$ibase"
+        if [ $# -gt 0 ]; then
+                for expr do echo "$expr"; done
+        else
+                cat
+        fi
+} | case "$calc" in
+        square|cube) read obase; echo "$obase";
+                     read ibase; echo "$ibase";
+                     while read x; do echo "${x}^${exp}"; done ;;
+        *) cat ;;
+    esac | bc -l 
