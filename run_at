@@ -1,0 +1,84 @@
+#! /bin/sh
+#  Synopsis:    run_at [-l logdir] time_spec
+#  Description: A very cheap implementation of the "at" utility.
+#               Execute command(s) read from stdin at specified time_spec.
+#               time_spec can be specified as HHMM, HH:MM, or DDHHMM
+#               If HHMM or HH:MM is earlier than the current time, commands
+#               will be run the next day at the specified hour:minute.
+#               Output from commands run is logged to $logdir/run_at.$time_spec.$$
+
+argv0=`basename $0`
+while getopts l:f: opt; do
+        case $opt in
+           l) logdir=$OPTARG ;;
+           f) jobfile=$OPTARG
+              if [ ! -f "$jobfile" ]; then
+                 echo "Error: $argv0 - Cannot open '$jobfile'" >&2
+                 exit 1
+              fi
+              ;;
+          \?) exit 1 ;;
+        esac
+done
+shift `expr $OPTIND - 1`                
+if [ -z "$logdir" ]; then logdir=/usr/tmp; fi
+
+case "$1" in                                 
+  [01][0-9]:[0-5][0-9]) tgt_time=`echo "$1" | tr -d ':'` ;;
+  *) tgt_time="$1" ;;                   
+esac                                    
+
+case "$tgt_time" in                     
+  [01][0-9][0-5][0-9]|2[0-3][0-5][0-9])  # HHMM
+        tgt_day=`date +%d`                   
+        tgt_hr=`expr $tgt_time : '\(..\)'`
+        tgt_min=`expr $tgt_time : '..\(..\)'`
+        ctime=`date +%H%M`              
+        ctime_hr=`date +%H`                
+        ctime_min=`date +%M`               
+        if [ `expr $tgt_time - $ctime` -lt 0 ]; then
+                sleep=`echo "86400 - ($ctime_hr * 3600 + $ctime_min * 60) + $tgt_hr * 3660 + $tgt_min * 60" | bc`
+        else                            
+                sleep=`echo "($tgt_hr * 3600 + $tgt_min * 60) - ($ctime_hr * 3600 + $ctime_min * 60)" | bc`
+        fi                              
+        ;;                           
+  [0-3][0-9][01][0-9][0-5][0-9])  # DDHHMM
+        tgt_day=`expr $tgt_time : '\(..\)'`
+        ctime_day=`date +%d`
+        tgt_hr=`expr $tgt_time : '..\(..\)'`
+        tgt_min=`expr $tgt_time : '....\(..\)'`
+        sleep=`echo "$tgt_hr * 3660 + $tgt_min * 60" | bc`
+        ;;
+#  [01][0-2][0-3][0-9][01][0-9][0-5][0-9])  # mmDDHHMM
+#       echo "Warning: $argv0 - Not implemented " >&2
+#       exit 1
+#       ;;
+   *)   echo "Error: Invalid timespec '$tgt_time'" >&2
+        exit 1 ;;
+esac
+
+umask 077
+runfile=$logdir/run_at.$tgt_time.$$
+{
+        echo '#! /bin/sh'
+        echo "trap 'rm $runfile' 0 9 15"
+        echo 'ctime_day=`date +%d`'
+        echo "while [ $tgt_day -ne \$ctime_day ]; do"
+        echo '  sleep 8640000'
+        echo '  ctime_day=`date +%d`'
+        echo 'done'
+        echo "sleep $sleep"
+        if [ -n "$jobfile" ]; then
+                echo "$jobfile"
+        else
+                cat
+        fi
+} > $runfile
+
+logfile="$logdir/run_at.$tgt_time.$$.log"
+nohup sh $runfile > $logfile 2>&1 &
+echo "  Runfile: '$runfile'"
+echo "  Logfile: '$logfile'"
+exit
+
+:!echo 'date; echo hello' | sh -x % 1716
