@@ -1,0 +1,52 @@
+#! /bin/sh
+#  Synopsis:    rdiff [-b] [-s] [[user@]host1:]file1 [[user@]host2:]file2
+#               rcmp [[user@]host1:]file1 [[user@]host2:]file2
+#  Description: Run diff/cmp on remote/local files.
+#               Options: -b     Ignore changes in amount of white space.
+#               Options: -s     Sort the file contents before running the diff/cmp.
+#               Note: Simple pattern matching is used to determine if a file is remote or local.
+#                     The filename is a remote file if it matches "user@host:*" or "host:*".
+#                     To force a match for a local file, specify the full path with a leading '/'.
+#               Note2: This script uses scp or rcp to copy remote files.
+#                      (~/.ssh/.authorized_keys, or ~/.rhosts may need to be configured)
+
+getfile()                 
+{                         
+        case "$1" in      
+          *\@*:*|*:*) scp "$1" "$2" ;;
+          /*) ln -s "$1" "$2" ;; 
+          '-') cat > "$2" ;;
+          *) ln -s "$PWD/$1" "$2" ;;
+        esac
+        if [ ${sort:-0} -eq 1 ]; then
+                sort $2 > $2.sorted && mv $2.sorted $2
+        fi
+}         
+                
+                
+# Main          
+case $0 in      
+  *rdiff) cmd=diff;;             
+  *rcmp) cmd=cmp;;
+  *rcsvdiff) cmd=csvdiff;;
+esac            
+                
+while getopts bs opt; do
+        case $opt in
+          b) options="${options} -b" ;;
+          s) sort=1 ;;
+        esac    
+done            
+shift `expr $OPTIND - 1`
+                
+TMPDIR=$HOME/.tmp
+if [ ! -w "$TMPDIR" ]; then
+        TMPDIR=/usr/tmp 
+fi              
+tmpfile1=$TMPDIR/r${cmd}1.$$
+tmpfile2=$TMPDIR/r${cmd}2.$$
+trap "rm -f $tmpfile1 $tmpfile2" 0 15
+                
+if getfile "$1" "$tmpfile1" && getfile "$2" "$tmpfile2"; then
+        eval $cmd $options $tmpfile1 $tmpfile2
+fi
